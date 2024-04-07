@@ -6,10 +6,8 @@ import mongoose from 'mongoose';
 import database from './src/config/database';
 
 import homeRouter from './src/routes/homeRouter';
-import loginRouter from './src/routes/loginRouter';
+import userRouter from './src/routes/userRouter';
 import contasRouter from './src/routes/contasRouter';
-
-
 
 class App {
      constructor() {
@@ -27,7 +25,7 @@ class App {
      routes() {
           this.app.use('/', homeRouter);
           this.app.use('/contas/', contasRouter);
-          this.app.use('/login/', loginRouter)
+          this.app.use('/user/', userRouter)
      }
 
      async connectionDB() {

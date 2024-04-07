@@ -3,7 +3,6 @@ import Conta from "../models/ContaModel";
 class ContaController {
      async store(req, res) {
           try {
-               // const dados = await Conta.create(req.body);
                const dados = new Conta(req.body);
                const result = await dados.register();
 

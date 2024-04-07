@@ -60,6 +60,11 @@ class Conta {
           return conta;
      }
 
+     async editarConta(id) {
+          const conta = await ContaModel.findByIdAndUpdate(id, this.body, { new: true });
+          return conta;
+     }
+
      static async delete(id) {
           if (typeof id !== 'string') return;
           
