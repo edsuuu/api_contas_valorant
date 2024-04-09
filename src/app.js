@@ -3,11 +3,11 @@ import express from 'express';
 require('dotenv').config();
 
 import mongoose from 'mongoose';
-import database from './src/config/database';
+import database from './config/database';
 
-import homeRouter from './src/routes/homeRouter';
-import userRouter from './src/routes/userRouter';
-import contasRouter from './src/routes/contasRouter';
+import homeRouter from './routes/homeRouter';
+import userRouter from './routes/userRouter';
+import contasRouter from './routes/contasRouter';
 
 class App {
      constructor() {
