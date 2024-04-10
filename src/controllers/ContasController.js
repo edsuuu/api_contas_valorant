@@ -10,8 +10,11 @@ class ContaController {
 
                await novaConta.save();
 
+               const { dono_conta, login_conta } = novaConta;
+
                res.status(201).json({
-                    msg: 'Conta criada com sucesso'
+                    msg: 'Conta cadastrada com sucesso',
+                    conta_cadastrada: { dono_conta, login_conta },
                });
 
           } catch (error) {
@@ -26,12 +29,12 @@ class ContaController {
                }
           }
      }
-     
+
      async index(req, res) {
           try {
                const listarContas = await ContaModel.find({}, { senha_conta: 0, __v: 0 });
 
-               return res.json(listarContas);
+               return res.status(200).json(listarContas);
           } catch (e) {
                return res.json(null);
           }
@@ -46,7 +49,12 @@ class ContaController {
                if (!contaAtualizada)
                     return res.status(404).json({ errors: ['Conta não encontrada'] });
 
-               return res.json(contaAtualizada);
+               const { dono_conta, login_conta, senha_conta } = contaAtualizada;
+
+               return res.status(200).json({
+                    msg: 'Conta atualizada com sucesso',
+                    conta_atualizada: { dono_conta, login_conta, senha_conta }
+               });
           } catch (error) {
                if (error instanceof mongoose.Error.CastError && error.kind === 'ObjectId') {
                     return res.status(400).json({ error: 'Este ID não existe.' });
@@ -67,9 +75,12 @@ class ContaController {
                     return res.status(404).json({ errors: ['Conta não encontrada'] });
                }
 
-               await ContaModel.deleteMany({ _id: id });
+               await ContaModel.deleteOne({ _id: id });
 
-               return res.json({ msg: 'Conta deletada com sucesso' });
+               return res.status(200).json({ 
+                    msg: 'Conta deletada com sucesso',
+                    conta_deletada: conta.login_conta,
+                });
           } catch (error) {
                if (error instanceof mongoose.Error.CastError && error.kind === 'ObjectId') {
                     return res.status(400).json({ error: 'Este ID não existe.' });
