@@ -1,47 +1,28 @@
-import Conta from "../models/ContaModel";
+import ContaModel from "../models/ContaModel";
 
 class ContaController {
      async store(req, res) {
           try {
-               const dados = new Conta(req.body);
-               const result = await dados.register();
+               const novaConta = new ContaModel(req.body);
 
-               if (result.errors) {
-                    return res.status(400).json({ error: result.errors });
-               }
+               await novaConta.validate();
 
-               return res.json(result);
-          } catch (e) {
-               console.log(e);
-               res.status(500).json({ error: 'Erro ao criar uma nova conta' });
-          }
-     }
-     async index(req, res) {
-          const conta = await Conta.listarContas();
-          return res.json(conta);
-     }
+               await novaConta.save();
 
-     async edit(req, res) {
-          const { id } = req.params;
-          const conta = new Conta(req.body);
-          await conta.editarConta(id);
-          return res.json({ msg: 'Conta editada com sucesso' });
-     }
+               res.status(201).json({
+                    msg: 'Conta criada com sucesso'
+               });
 
-     async delete(req, res) {
-          try {
-               const { id } = req.params;
-
-               const deletarConta = await Conta.delete(id);
-
-               if (!deletarConta) {
-                    return res.status(400).json({ error: 'Conta não encontrada' });
-               }
-
-               return res.json({ msg: 'Conta deletada com sucesso' });
           } catch (error) {
-               console.log(error);
-               return res.status(500).json({ error: 'Erro ao deletar a conta' });
+               if (error.name === 'ValidationError') {
+                    const validationErrors = Object.values(error.errors).map(err => err.message);
+                    res.status(400).json({ errors: validationErrors });
+               } else if (error.code === 11000) {
+                    res.status(400).json({ error: 'Login já existe' });
+               } else {
+                    console.error('Erro ao criar conta:', error);
+                    res.status(500).json({ error: 'Erro interno do servidor' });
+               }
           }
      }
 

@@ -30,7 +30,7 @@ class App {
 
      async connectionDB() {
           try {
-               await mongoose.connect(database.url, database.options);
+               await mongoose.connect(database.url);
                console.log('Conexão feita com sucesso');
           } catch (err) {
                console.error('Erro ao conectar com o banco', err);
