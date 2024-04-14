@@ -8,6 +8,7 @@ import database from './config/database';
 import homeRouter from './routes/homeRouter';
 import userRouter from './routes/userRouter';
 import contasRouter from './routes/contasRouter';
+import tokenRouter from './routes/tokenRouter';
 
 class App {
      constructor() {
@@ -26,6 +27,7 @@ class App {
           this.app.use('/', homeRouter);
           this.app.use('/contas/', contasRouter);
           this.app.use('/user/', userRouter)
+          this.app.use('/tokens/', tokenRouter)
      }
 
      async connectionDB() {
