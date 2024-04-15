@@ -9,7 +9,8 @@ router.post('/cadastro/', userController.store);
 
 router.get('/', loginRequired, userController.index);
 router.get('/:id', loginRequired, userController.show);
-router.put('/edit/:id', loginRequired, userController.update);
-router.delete('/:id', loginRequired, userController.delete);
+
+router.put('/edit/', loginRequired, userController.update);
+router.delete('/', loginRequired, userController.delete);
 
 export default router;

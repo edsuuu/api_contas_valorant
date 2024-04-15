@@ -55,16 +55,17 @@ class UserController {
 
      async update(req, res) {
           try {
-               const { id } = req.params;
 
-               const atualizarUsuario = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
+               console.log(req.userId);
+
+               const atualizarUsuario = await UserModel.findByIdAndUpdate(req.userId, req.body, { new: true });
 
                if (!atualizarUsuario)
                     return res.status(404).json({ errors: ['Conta não encontrada'] });
 
                const { _id, nome, email } = atualizarUsuario;
 
-               return res.status(200).json({
+               return res.status(200).json( {
                     msg: 'Usuário atualizado com sucesso !',
                     usuario_atualizado: { _id, nome, email }
                });
@@ -81,21 +82,25 @@ class UserController {
 
      async delete(req, res) {
           try {
-               const { id } = req.params;
 
-               const user = await UserModel.findById(id);
+               if (!req.userId) {
+                    return res.status(400).json({ errors: ['ID não informado'] });
+               }
+
+               const user = await UserModel.findById(req.userId);
 
                if (!user) {
                     return res.status(404).json({ errors: ['Usuário não encontrado'] });
                }
 
-               await UserModel.deleteOne({ _id: id });
+               await UserModel.deleteOne({ _id: req.userId });
 
                return res.status(200).json({
                     msg: 'Usuário deletado com sucesso',
                     usuario_deletado: user.email,
                });
           } catch (error) {
+               console.log(error);
                if (error instanceof mongoose.Error.CastError && error.kind === 'ObjectId') {
                     return res.status(400).json({ error: 'Este ID não existe.' });
                } else {
