@@ -33,7 +33,6 @@ class ContaController {
      async index(req, res) {
           try {
                const listarContas = await ContaModel.find({}, { senha_conta: 0, __v: 0 });
-
                return res.status(200).json(listarContas);
           } catch (e) {
                return res.json(null);
