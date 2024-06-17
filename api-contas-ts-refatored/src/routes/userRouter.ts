@@ -4,13 +4,12 @@ import loginRequire from '../middleware/loginRequire';
 
 const userRoute: Router = Router();
 
-userRoute.get('/', userController.test);
-// userRoute.get('/', userController.index);
-// userRoute.post('/cadastro/', userController.store);
-// userRoute.get('/:id', userController.show);
-// userRoute.put('/edit/', userController.update);
-// userRoute.delete('/', userController.delete);
-
+userRoute.get('/test', userController.test);
+userRoute.post('/cadastro/', userController.store);
+userRoute.get('/', userController.index);
+userRoute.get('/:id', userController.show);
+userRoute.put('/edit/:id', userController.update);
+userRoute.delete('/:id', userController.delete);
 
 export { userRoute };
 
