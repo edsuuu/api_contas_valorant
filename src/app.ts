@@ -1,18 +1,17 @@
 import express, { Express } from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import helmet from 'helmet';
+import mongoose from 'mongoose';
+import database from './config/db';
 import { homeRoute } from './routes/homeRoute';
 import { contaRouter } from './routes/contasRouter';
 import { tokenRoute } from './routes/tokenRoute';
 import { userRoute } from './routes/userRouter';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import helmet from 'helmet';
-
-import mongoose from 'mongoose';
-import database from './config/db';
 
 dotenv.config();
 
-const whitelist = ['http://example1.com', 'http://example2.com'];
+const whitelist = ['http://localhost:3000'];
 
 const corsOptions: cors.CorsOptions = {
     origin: function (origin, callback) {
