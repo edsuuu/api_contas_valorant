@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import UserModel, { IUser } from '../../models/UserModel';
+import { IGetUserAuthInfoRequest } from './userTypes';
 
 interface MongoError extends Error {
     code?: number;
@@ -11,6 +12,10 @@ class UserController {
 
     test(req: Request, res: Response) {
         res.json('hello users');
+
+        // const request = req.userId;
+        // console.log(request);
+
     }
 
     async store(req: Request, res: Response): Promise<Response> {
@@ -59,12 +64,11 @@ class UserController {
         }
     }
 
-    async update(req: Request, res: Response): Promise<Response> {
+    async update(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
-            console.log(id);
 
-            const atualizarUsuario = await UserModel.findByIdAndUpdate(id, req.body as IUser, { new: true }).exec();
+
+            const atualizarUsuario = await UserModel.findByIdAndUpdate(req.userId, req.body as IUser, { new: true }).exec();
 
             if (!atualizarUsuario) {
                 return res.status(404).json({ errors: ['Conta não encontrada'] });
@@ -89,21 +93,20 @@ class UserController {
 
     }
 
-    async delete(req: Request, res: Response): Promise<Response> {
+    async delete(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
 
-            if (!id) {
+            if (!req.userId) {
                 return res.status(400).json({ errors: ['ID não informado'] });
             }
 
-            const user = await UserModel.findById(id).exec();
+            const user = await UserModel.findById(req.userId).exec();
 
             if (!user) {
                 return res.status(404).json({ errors: ['Usuário não encontrado'] });
             }
 
-            await UserModel.deleteOne({ _id: id }).exec();
+            await UserModel.deleteOne({ _id: req.userId }).exec();
 
             return res.status(200).json({
                 msg: 'Usuário deletado com sucesso',
