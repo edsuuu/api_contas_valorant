@@ -1,5 +1,4 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
-
 // Interface para representar um documento Conta
 interface IConta extends Document {
   dono_conta: string;

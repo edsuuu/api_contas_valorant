@@ -10,26 +10,30 @@ interface MongoError extends Error {
 
 class UserController {
 
-    test(req: Request, res: Response) {
-        res.json('hello users');
+    async test(req: Request, res: Response) {
+        // console.log(req);
 
-        // const request = req.userId;
-        // console.log(request);
-
+        return res.status(200).json('ok');
     }
 
     async store(req: Request, res: Response): Promise<Response> {
         try {
+
+            //persistencia
+            if (!req.body.permission) {
+                req.body.permission = 'user';
+            }
+
             const novoUsuario = new UserModel(req.body as IUser);
 
             await novoUsuario.validate();
             await novoUsuario.save();
 
-            const { _id, nome, email } = novoUsuario;
+            const { _id, nome, email, permission } = novoUsuario;
 
             return res.status(201).json({
                 msg: 'Usuário criado com sucesso!',
-                novo_usuario: { _id, nome, email }
+                novo_usuario: { _id, nome, email, permission }
             });
         } catch (error) {
             const mongoError = error as MongoError;

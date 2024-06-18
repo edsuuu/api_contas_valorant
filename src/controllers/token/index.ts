@@ -25,9 +25,11 @@ class TokenController {
             return res.status(401).json({ errors: ['Senha inválida'] });
         }
 
-        const { id } = user;
+        const { id, permission } = user;
 
-        const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET as string, {
+        // console.log('User before token generation:', { id, email, permission });
+
+        const token = jwt.sign({ id, email, permission }, process.env.TOKEN_SECRET as string, {
             expiresIn: process.env.TOKEN_EXPIRATION,
         });
 
