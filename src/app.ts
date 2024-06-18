@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import database from './config/db';
 import { homeRoute } from './routes/homeRoute';
 import { contaRouter } from './routes/contasRouter';
-import { tokenRoute } from './routes/tokenRoute';
+import { authRoute } from './routes/authRoute';
 import { userRoute } from './routes/userRouter';
 
 dotenv.config();
@@ -44,7 +44,7 @@ class App {
         this.app.use('/api/', homeRoute);
         this.app.use('/api/contas/', contaRouter);
         this.app.use('/api/user/', userRoute);
-        this.app.use('/api/login/', tokenRoute);
+        this.app.use('/api/login/', authRoute);
     }
 
     async connectionDB() {

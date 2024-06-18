@@ -93,8 +93,6 @@ class UserController {
                 return res.status(500).json({ error: 'Ocorreu um erro interno.' });
             }
         }
-
-
     }
 
     async delete(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {

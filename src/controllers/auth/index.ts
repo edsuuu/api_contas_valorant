@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import UserModel from '../../models/UserModel';
 
-class TokenController {
+class authController {
 
     test(req: Request, res: Response) {
         res.json('hello token');
@@ -37,4 +37,4 @@ class TokenController {
     }
 }
 
-export default new TokenController();
+export default new authController();
