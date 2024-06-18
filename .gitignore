@@ -1,3 +1,6 @@
-front-valorant
+node_modules
+dist
+coverage
+ExemploTestesComClasses
 .env
 package-lock.json
