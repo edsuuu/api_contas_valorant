@@ -7,6 +7,7 @@ class TokenController {
     test(req: Request, res: Response) {
         res.json('hello token');
     }
+
     async store(req: Request, res: Response): Promise<Response> {
         const { email = '', password = '' } = req.body;
 

@@ -3,7 +3,7 @@ import tokenController from '../controllers/token';
 
 const tokenRoute: Router = Router();
 
-tokenRoute.get('/', tokenController.test);
-// tokenRoute.get('/', tokenController.store);
+tokenRoute.get('/test', tokenController.test);
+tokenRoute.post('/', tokenController.store);
 
 export { tokenRoute };
