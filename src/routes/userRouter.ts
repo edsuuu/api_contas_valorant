@@ -5,12 +5,12 @@ import loginRequired from '../middleware/loginRequired';
 const userRoute: Router = Router();
 
 userRoute.get('/test', loginRequired, userController.test);
-userRoute.post('/cadastro/', loginRequired, userController.store);
+userRoute.post('/cadastro/', userController.store);
 //ver contas listadas
-userRoute.get('/',  userController.index);
-userRoute.get('/:id', loginRequired, userController.show);
-userRoute.put('/edit/:id', loginRequired, userController.update);
-userRoute.delete('/:id', loginRequired, userController.delete);
+// userRoute.get('/', loginRequired, userController.index);
+// userRoute.get('/:id', loginRequired, userController.show);
+userRoute.put('/edit/', loginRequired, userController.update);
+userRoute.delete('/', loginRequired, userController.delete);
 
 export { userRoute };
 
