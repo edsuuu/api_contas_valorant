@@ -45,6 +45,16 @@ class ContaController {
         }
     }
 
+    async show(req: Request, res: Response): Promise<Response> {
+        try {
+            const { id } = req.params;
+            const listarContas = await ContaModel.findById(id, { password_hash: 0, __v: 0 }).exec();
+            return res.status(200).json(listarContas);
+        } catch (error) {
+            return res.status(500).json(null);
+        }
+    }
+
     async update(req: Request, res: Response): Promise<Response> {
         try {
             const { id } = req.params;
