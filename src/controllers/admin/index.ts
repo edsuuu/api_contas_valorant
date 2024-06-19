@@ -67,8 +67,9 @@ class adminController {
     async updateUser(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
 
+            const { id } = req.params;
 
-            const atualizarUsuario = await UserModel.findByIdAndUpdate(req.userId, req.body as IUser, { new: true }).exec();
+            const atualizarUsuario = await UserModel.findByIdAndUpdate(id, req.body as IUser, { new: true }).exec();
 
             if (!atualizarUsuario) {
                 return res.status(404).json({ errors: ['Conta não encontrada'] });
@@ -82,7 +83,7 @@ class adminController {
             });
         } catch (error) {
             const mongoError = error as MongoError;
-            console.log(mongoError);
+            // console.log(mongoError);
             if (mongoError instanceof mongoose.Error.CastError && mongoError.kind === 'ObjectId') {
                 return res.status(400).json({ error: 'Este ID não existe.' });
             } else {
@@ -94,7 +95,10 @@ class adminController {
     async deleteUser(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
 
-            if (!req.userId) {
+            const { id } = req.params;
+
+
+            if (!id) {
                 return res.status(400).json({ errors: ['ID não informado'] });
             }
 

@@ -7,17 +7,18 @@ const adminRoute: Router = Router();
 adminRoute.get('/dashboard', loginRequired, authorize('admin'), adminController.dash);
 
 //criar um usuario
-adminRoute.post('/users/register/', adminController.criarUser);
+adminRoute.post('/user/register/', loginRequired, authorize('admin'), adminController.criarUser);
 
 //listar todos usuarios
-adminRoute.get('/users', loginRequired, adminController.index);
+adminRoute.get('/users', loginRequired, authorize('admin'), adminController.index);
 
 //listar um usuario
-adminRoute.get('/users/:id', loginRequired, adminController.show);
+adminRoute.get('/user/:id', loginRequired, authorize('admin'), adminController.show);
 
 //precisa editar o metodo
-adminRoute.put('/users/:id', loginRequired, adminController.updateUser);
+adminRoute.put('/user/edit/:id', loginRequired, authorize('admin'), adminController.updateUser);
 
-adminRoute.delete('/users/:id', loginRequired, adminController.deleteUser);
+//deletar usuario
+adminRoute.delete('/user/:id', loginRequired, authorize('admin'), adminController.deleteUser);
 
 export { adminRoute };

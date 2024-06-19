@@ -16,44 +16,18 @@ class UserController {
         return res.status(200).json('ok');
     }
 
-    // async store(req: Request, res: Response): Promise<Response> {
-    //     try {
-
-    //         //persistencia
-    //         if (!req.body.permission) {
-    //             req.body.permission = 'user';
-    //         }
-
-    //         const novoUsuario = new UserModel(req.body as IUser);
-
-    //         await novoUsuario.validate();
-    //         await novoUsuario.save();
-
-    //         const { _id, nome, email, permission } = novoUsuario;
-
-    //         return res.status(201).json({
-    //             msg: 'Usuário criado com sucesso!',
-    //             novo_usuario: { _id, nome, email, permission }
-    //         });
-    //     } catch (error) {
-    //         const mongoError = error as MongoError;
-    //         if (mongoError instanceof mongoose.Error.ValidationError) {
-    //             const validationErrors = Object.values(mongoError.errors).map(err => (err as mongoose.Error.ValidatorError).message);
-    //             return res.status(400).json({ errors: validationErrors });
-    //         } else if (mongoError.code === 11000) {
-    //             return res.status(400).json({ error: 'Email já existe' });
-    //         } else {
-    //             console.error('Erro ao criar Usuário:', mongoError);
-    //             return res.status(500).json({ error: 'Erro interno do servidor' });
-    //         }
-    //     }
-    // }
-
-
+    async show(req: Request, res: Response): Promise<Response> {
+        try {
+            const { id } = req.params;
+            const listarUsuarios = await UserModel.findById(id, { password_hash: 0, __v: 0 }).exec();
+            return res.status(200).json(listarUsuarios);
+        } catch (error) {
+            return res.status(500).json(null);
+        }
+    }
 
     async update(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-
 
             const atualizarUsuario = await UserModel.findByIdAndUpdate(req.userId, req.body as IUser, { new: true }).exec();
 
@@ -61,11 +35,11 @@ class UserController {
                 return res.status(404).json({ errors: ['Conta não encontrada'] });
             }
 
-            const { _id, nome, email } = atualizarUsuario;
+            const { _id, nome, email, login } = atualizarUsuario;
 
             return res.status(200).json({
                 msg: 'Usuário atualizado com sucesso!',
-                usuario_atualizado: { _id, nome, email }
+                usuario_atualizado: { _id, nome, email, login }
             });
         } catch (error) {
             const mongoError = error as MongoError;
