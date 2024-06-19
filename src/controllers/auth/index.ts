@@ -29,7 +29,7 @@ class authController {
             expiresIn: process.env.TOKEN_EXPIRATION,
         });
 
-        return res.json({ token, user: { nome: user.nome, login, id } });
+        return res.json({ token, user: { nome: user.nome, login, id, permission } });
     }
 }
 
