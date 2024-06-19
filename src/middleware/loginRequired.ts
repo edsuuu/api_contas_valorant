@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
     id: string;
-    email: string;
+    login: string;
     permission: string;
 
 }
 
 interface CustomRequest extends Request {
     userId?: string;
-    userEmail?: string;
+    userLogin?: string;
     userPermission?: string;
 }
 
@@ -23,12 +23,12 @@ export default (req: Request, res: Response, next: NextFunction): Response | voi
 
     try {
         const dados = jwt.verify(token, process.env.TOKEN_SECRET as string) as JwtPayload;
-        const { id, email, permission } = dados;
+        const { id, login, permission } = dados;
 
         // console.log(dados);
 
         (req as CustomRequest).userId = id;
-        (req as CustomRequest).userEmail = email;
+        (req as CustomRequest).userLogin = login;
         (req as CustomRequest).userPermission = permission;
 
         // console.log('Decoded JWT:', dados);

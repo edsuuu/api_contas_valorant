@@ -6,6 +6,7 @@ type RolesTypes = 'admin' | 'user';
 interface IUser extends Document {
     nome: string;
     email: string;
+    login: string;
     password_hash: string;
     password?: string;
     _password?: string;
@@ -34,6 +35,18 @@ const UserSchema = new Schema<IUser>({
         validate: {
             validator: (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
             message: 'Email inválido',
+        },
+    },
+    login: {
+        type: String,
+        default: '',
+        required: [true, 'Campo Login é obrigatório'],
+        unique: true,
+        validate: {
+            validator: function (v: string) {
+                return v.length >= 3 && v.length <= 255;
+            },
+            message: 'Campo Login precisa ter entre 3 a 255 caracteres'
         },
     },
     password_hash: {

@@ -4,18 +4,14 @@ import UserModel from '../../models/UserModel';
 
 class authController {
 
-    test(req: Request, res: Response) {
-        res.json('hello token');
-    }
-
     async store(req: Request, res: Response): Promise<Response> {
-        const { email = '', password = '' } = req.body;
+        const { login = '', password = '' } = req.body;
 
-        if (!email || !password) {
+        if (!login || !password) {
             return res.status(401).json({ errors: ['Credenciais inválidas'] });
         }
 
-        const user = await UserModel.findOne({ email }).exec();
+        const user = await UserModel.findOne({ login }).exec();
 
         if (!user) {
             return res.status(401).json({ errors: ['Usuário não existe'] });
@@ -29,11 +25,11 @@ class authController {
 
         // console.log('User before token generation:', { id, email, permission });
 
-        const token = jwt.sign({ id, email, permission }, process.env.TOKEN_SECRET as string, {
+        const token = jwt.sign({ id, login, permission }, process.env.TOKEN_SECRET as string, {
             expiresIn: process.env.TOKEN_EXPIRATION,
         });
 
-        return res.json({ token, user: { nome: user.nome, email, id } });
+        return res.json({ token, user: { nome: user.nome, login, id } });
     }
 }
 

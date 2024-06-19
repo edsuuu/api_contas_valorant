@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 interface CustomRequest extends Request {
     userId?: string;
-    userEmail?: string;
+    userLogin?: string;
     userPermission?: string;
 }
 
@@ -11,8 +11,8 @@ const authorize = (requiredPermission: string) => {
 
         console.log('Required Permission:', requiredPermission);
         console.log('User ID:', req.userId);
-        console.log('User ID:', req.userEmail);
-        console.log('User ID:', req.userPermission);
+        console.log('User Login:', req.userLogin);
+        console.log('User Permission:', req.userPermission);
 
         try {
             if (req.userPermission === requiredPermission) {

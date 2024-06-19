@@ -9,10 +9,6 @@ interface MongoError extends Error {
 
 class ContaController {
 
-    test(req: Request, res: Response) {
-        res.json('hello contas');
-    }
-
     async store(req: Request, res: Response): Promise<Response> {
         try {
             const novaConta = new ContaModel(req.body as IConta);

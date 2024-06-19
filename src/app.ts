@@ -5,9 +5,10 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import database from './config/db';
 import { homeRoute } from './routes/homeRoute';
-import { contaRouter } from './routes/contasRouter';
 import { authRoute } from './routes/authRoute';
 import { userRoute } from './routes/userRouter';
+import { contaRoute } from './routes/contasRoute';
+import { adminRoute } from './routes/adminRoute';
 
 dotenv.config();
 
@@ -42,7 +43,8 @@ class App {
 
     routes() {
         this.app.use('/api/', homeRoute);
-        this.app.use('/api/contas/', contaRouter);
+        this.app.use('/api/admin/', adminRoute);
+        this.app.use('/api/contas/', contaRoute);
         this.app.use('/api/user/', userRoute);
         this.app.use('/api/login/', authRoute);
     }
