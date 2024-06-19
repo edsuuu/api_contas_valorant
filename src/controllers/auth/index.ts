@@ -21,7 +21,7 @@ class authController {
             return res.status(401).json({ errors: ['Senha inválida'] });
         }
 
-        const { id, permission } = user;
+        const { id, permission, email } = user;
 
         // console.log('User before token generation:', { id, email, permission });
 
@@ -29,7 +29,7 @@ class authController {
             expiresIn: process.env.TOKEN_EXPIRATION,
         });
 
-        return res.json({ token, user: { nome: user.nome, login, id, permission } });
+        return res.json({ token, user: { nome: user.nome, login, id, permission, email } });
     }
 }
 
