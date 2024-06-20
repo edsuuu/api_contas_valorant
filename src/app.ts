@@ -4,15 +4,19 @@ import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import database from './config/db';
+import expressWinston from 'express-winston';
+
 import { homeRoute } from './routes/homeRoute';
 import { authRoute } from './routes/authRoute';
 import { userRoute } from './routes/userRouter';
 import { contaRoute } from './routes/contasRoute';
 import { adminRoute } from './routes/adminRoute';
+import captureIP from './middleware/capture';
+import logger from './utils/logger';
 
 dotenv.config();
 
-const whitelist = ['http://localhost:3000', 'http://localhost:5173'] ;
+const whitelist = ['http://localhost:3000', 'http://localhost:5173'];
 
 const corsOptions: cors.CorsOptions = {
     origin: function (origin, callback) {
@@ -39,6 +43,9 @@ class App {
         this.app.use(helmet());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
+        // this.app.use(expressIp.getIpInfoMiddleware());
+        // this.app.use(captureIP)
+        this.app.use(expressWinston.logger(logger))
     }
 
     routes() {
