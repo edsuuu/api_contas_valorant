@@ -12,6 +12,8 @@ interface IUser extends Document {
     _password?: string;
     passwordIsValid(password: string): Promise<boolean>;
     permission: RolesTypes;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -57,8 +59,8 @@ const UserSchema = new Schema<IUser>({
         type: String,
         enum: ['admin', 'user'],
         default: 'user',
-    }
-});
+    },
+}, { timestamps: true });
 
 UserSchema.virtual('password')
     .set(function (this: IUser, password: string) {
