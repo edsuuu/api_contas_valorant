@@ -7,7 +7,7 @@ const adminRoute: Router = Router();
 adminRoute.get('/dashboard', loginRequired, authorize('admin'), adminController.dash);
 
 //criar um usuario
-adminRoute.post('/user/register/', loginRequired, authorize('admin'), adminController.criarUser);
+adminRoute.post('/user/register/', adminController.criarUser);
 
 //listar todos usuarios
 adminRoute.get('/users', loginRequired, authorize('admin'), adminController.index);

@@ -12,7 +12,7 @@ import { adminRoute } from './routes/adminRoute';
 
 dotenv.config();
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:5173'] ;
 
 const corsOptions: cors.CorsOptions = {
     origin: function (origin, callback) {
