@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import contasController from '../controllers/Contas';
+import contasController from '@/controllers/contas';
 
-import loginRequired from '../middleware/loginRequired';
+import loginRequired from '@/middleware/loginRequired';
 
 const contaRoute: Router = Router();
 

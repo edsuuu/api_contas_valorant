@@ -6,13 +6,13 @@ import mongoose from 'mongoose';
 import database from './config/db';
 import expressWinston from 'express-winston';
 
-import { homeRoute } from './routes/homeRoute';
-import { authRoute } from './routes/authRoute';
-import { userRoute } from './routes/userRouter';
-import { contaRoute } from './routes/contasRoute';
-import { adminRoute } from './routes/adminRoute';
-import captureIP from './middleware/capture';
-import logger from './utils/logger';
+import { homeRoute } from './routes/home/homeRoute';
+import { authRoute } from './routes/auth/authRoute';
+import { userRoute } from './routes/user/userRouter';
+import { contaRoute } from './routes/contas/contasRoute';
+import { adminRoute } from './routes/admin/adminRoute';
+
+import logger from './middleware/logger';
 
 dotenv.config();
 
@@ -43,8 +43,6 @@ class App {
         this.app.use(helmet());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
-        // this.app.use(expressIp.getIpInfoMiddleware());
-        // this.app.use(captureIP)
         this.app.use(expressWinston.logger(logger))
     }
 
@@ -61,7 +59,7 @@ class App {
             await mongoose.connect(database.url);
             console.log('[server]: Conexão feita com sucesso');
         } catch (err) {
-            console.error('Erro ao conectar com o banco', err);
+            console.error('[server]: Erro ao conectar com o banco', err);
         }
     }
 }

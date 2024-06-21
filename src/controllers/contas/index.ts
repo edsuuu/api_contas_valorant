@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import ContaModel, { IConta } from '../../models/contamodel';
+import ContaModel, { IConta } from '../../models/ContaModel';
 
 interface MongoError extends Error {
     code?: number;

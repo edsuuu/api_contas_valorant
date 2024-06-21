@@ -15,12 +15,16 @@
         "skipLibCheck": true, //IGNORAR ERROS DE MODULOS
         "typeRoots": [
             "./node_modules/@types",
-            "./src/types"
-        ]
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
     },
     "include": [
         "src" //ARQUIVO DE ENTRADA
         ,
-        "src/types/express.d.ts"
     ],
 }
