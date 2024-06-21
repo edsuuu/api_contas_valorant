@@ -20,8 +20,8 @@ const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.printf(({ timestamp, level, message }: winston.Logform.TransformableInfo & Meta) => {
-            return `${timestamp} ${level}: ${message}}`;
+        winston.format.printf(({ timestamp, level, message, ...meta }: winston.Logform.TransformableInfo & Meta) => {
+            return `${timestamp} ${level}: ${message} - IP: ${meta.ip ? meta.ip : 'N/A'}`;
         }),
     ),
     transports: [new winston.transports.Console(), dailyRotateFileTransport],

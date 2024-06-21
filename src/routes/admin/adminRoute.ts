@@ -12,6 +12,12 @@ const adminRoute: Router = Router();
 
 adminRoute.use(ipMiddleware);
 
+//listar todos usuarios
+adminRoute.get('/users', loginRequired, authorize('admin'), (req: Request, res: Response) => {
+    logger.info('GET: /', { ip: (req as any).clientIp });
+    adminController.index(req, res);
+});
+
 adminRoute.get('/logs', loginRequired, authorize('admin'), (req: Request, res: Response) => {
     logger.info('GET: /', { ip: (req as any).clientIp });
     console.log(req);
@@ -23,11 +29,6 @@ adminRoute.get('/dashboard', loginRequired, authorize('admin'), (req: Request, r
     adminController.dash(req, res);
 });
 
-//listar todos usuarios
-adminRoute.get('/users', loginRequired, authorize('admin'), (req: Request, res: Response) => {
-    logger.info('GET: /', { ip: (req as any).clientIp });
-    adminController.index(req, res);
-});
 //listar um usuario
 
 adminRoute.get('/user/:id', loginRequired, authorize('admin'), (req: Request, res: Response) => {

@@ -11,6 +11,10 @@ interface MongoError extends Error {
 }
 
 class adminController {
+    dash(req: Request, res: Response) {
+        res.json('hello dashbord');
+    }
+
     logs(req: Request, res: Response) {
         const logDirectory = path.join(__dirname, '../../../log');
         fs.readdir(logDirectory, (err, files) => {
@@ -27,10 +31,6 @@ class adminController {
 
             res.json(logs);
         });
-    }
-
-    dash(req: Request, res: Response) {
-        res.json('hello dashbord');
     }
 
     async index(req: Request, res: Response): Promise<Response> {
