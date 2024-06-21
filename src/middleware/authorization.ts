@@ -8,7 +8,6 @@ interface CustomRequest extends Request {
 
 const authorize = (requiredPermission: string) => {
     return (req: CustomRequest, res: Response, next: NextFunction): Response | void => {
-
         console.log('Required Permission:', requiredPermission);
         console.log('User ID:', req.userId);
         console.log('User Login:', req.userLogin);
@@ -16,19 +15,16 @@ const authorize = (requiredPermission: string) => {
 
         try {
             if (req.userPermission === requiredPermission) {
-                console.log('passei')
+                console.log('passei');
                 next();
             } else {
-                console.log('nao passei')
+                console.log('nao passei');
                 res.status(403).send('Access denied');
-            };
-
-
+            }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             res.status(403).send('Access denied');
         }
-
     };
 };
 

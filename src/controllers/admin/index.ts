@@ -48,12 +48,12 @@ class adminController {
 
             return res.status(201).json({
                 msg: 'Usuário criado com sucesso!',
-                novo_usuario: { _id, nome, login, email, permission }
+                novo_usuario: { _id, nome, login, email, permission },
             });
         } catch (error) {
             const mongoError = error as MongoError;
             if (mongoError instanceof mongoose.Error.ValidationError) {
-                const validationErrors = Object.values(mongoError.errors).map(err => (err as mongoose.Error.ValidatorError).message);
+                const validationErrors = Object.values(mongoError.errors).map((err) => (err as mongoose.Error.ValidatorError).message);
                 return res.status(400).json({ errors: validationErrors });
             } else if (mongoError.code === 11000) {
                 return res.status(400).json({ error: 'Email já existe' });
@@ -66,7 +66,6 @@ class adminController {
 
     async updateUser(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-
             const { id } = req.params;
 
             const atualizarUsuario = await UserModel.findByIdAndUpdate(id, req.body as IUser, { new: true }).exec();
@@ -79,7 +78,7 @@ class adminController {
 
             return res.status(200).json({
                 msg: 'Usuário atualizado com sucesso!',
-                usuario_atualizado: { _id, nome, login, email }
+                usuario_atualizado: { _id, nome, login, email },
             });
         } catch (error) {
             const mongoError = error as MongoError;
@@ -94,15 +93,14 @@ class adminController {
 
     async deleteUser(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-
             const { id } = req.params;
-
+            console.log(id);
 
             if (!id) {
                 return res.status(400).json({ errors: ['ID não informado'] });
             }
 
-            const user = await UserModel.findById(req.userId).exec();
+            const user = await UserModel.findById(id).exec();
 
             if (!user) {
                 return res.status(404).json({ errors: ['Usuário não encontrado'] });
@@ -124,8 +122,6 @@ class adminController {
             }
         }
     }
-
-
 }
 
 export default new adminController();

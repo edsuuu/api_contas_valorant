@@ -5,7 +5,6 @@ interface JwtPayload {
     id: string;
     login: string;
     permission: string;
-
 }
 
 interface CustomRequest extends Request {
@@ -40,4 +39,4 @@ export default (req: Request, res: Response, next: NextFunction): Response | voi
     } catch (e) {
         return res.status(401).json({ error: 'Token Invalido' });
     }
-}
+};

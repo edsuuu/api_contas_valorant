@@ -9,7 +9,6 @@ interface MongoError extends Error {
 }
 
 class UserController {
-
     async test(req: Request, res: Response) {
         // console.log(req);
 
@@ -28,7 +27,6 @@ class UserController {
 
     async update(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-
             const atualizarUsuario = await UserModel.findByIdAndUpdate(req.userId, req.body as IUser, { new: true }).exec();
 
             if (!atualizarUsuario) {
@@ -39,7 +37,7 @@ class UserController {
 
             return res.status(200).json({
                 msg: 'Usuário atualizado com sucesso!',
-                usuario_atualizado: { _id, nome, email, login }
+                usuario_atualizado: { _id, nome, email, login },
             });
         } catch (error) {
             const mongoError = error as MongoError;
@@ -54,7 +52,6 @@ class UserController {
 
     async delete(req: IGetUserAuthInfoRequest, res: Response): Promise<Response> {
         try {
-
             if (!req.userId) {
                 return res.status(400).json({ errors: ['ID não informado'] });
             }

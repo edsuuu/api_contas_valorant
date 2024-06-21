@@ -5,13 +5,11 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import database from './config/db';
 import expressWinston from 'express-winston';
-
 import { homeRoute } from './routes/home/homeRoute';
 import { authRoute } from './routes/auth/authRoute';
 import { userRoute } from './routes/user/userRouter';
 import { contaRoute } from './routes/contas/contasRoute';
 import { adminRoute } from './routes/admin/adminRoute';
-
 import logger from './middleware/logger';
 
 dotenv.config();

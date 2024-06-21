@@ -2,8 +2,11 @@ import path from 'path';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import winston from 'winston';
 
-import fs from 'fs';
+interface Meta {
+    ip?: string;
+}
 
+// rotação de arquivos diários
 const dailyRotateFileTransport = new DailyRotateFile({
     filename: path.join(__dirname, '../../log', 'data-%DATE%.log'),
     datePattern: 'YYYY-MM-DD',
@@ -12,24 +15,16 @@ const dailyRotateFileTransport = new DailyRotateFile({
     maxFiles: '30d',
 });
 
-// Definindo a interface para meta
-interface Meta {
-    ip?: string;
-}
-
-// Configurar o logger do winston
+// config do logger
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.printf(({ timestamp, level, message, ...meta }: winston.Logform.TransformableInfo & Meta) => {
             return `${timestamp} ${level}: ${message} - IP: ${meta.ip ? meta.ip : 'N/A'}`;
-        })
+        }),
     ),
-    transports: [
-        new winston.transports.Console(),
-        dailyRotateFileTransport,
-    ],
+    transports: [new winston.transports.Console(), dailyRotateFileTransport],
 });
 
 export default logger;
