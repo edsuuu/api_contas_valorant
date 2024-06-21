@@ -25,7 +25,7 @@ const corsOptions: cors.CorsOptions = {
         } else {
             callback(new Error('Not allowed by CORS'));
         }
-    }
+    },
 };
 
 class App {
@@ -43,7 +43,7 @@ class App {
         this.app.use(helmet());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
-        this.app.use(expressWinston.logger(logger))
+        this.app.use(expressWinston.logger(logger));
     }
 
     routes() {
