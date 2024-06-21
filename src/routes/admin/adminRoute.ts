@@ -12,6 +12,11 @@ const adminRoute: Router = Router();
 
 adminRoute.use(ipMiddleware);
 
+adminRoute.get('/logs', loginRequired, authorize('admin'), (req: Request, res: Response) => {
+    logger.info('GET: /', { ip: (req as any).clientIp });
+    adminController.logs(req, res);
+});
+
 adminRoute.get('/dashboard', loginRequired, authorize('admin'), (req: Request, res: Response) => {
     logger.info('GET: /', { ip: (req as any).clientIp });
     adminController.dash(req, res);

@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import UserModel, { IUser } from '../../models/UserModel';
 import { IGetUserAuthInfoRequest } from '../user/userTypes';
+import fs from 'fs';
+import path from 'path';
 
 interface MongoError extends Error {
     code?: number;
@@ -9,6 +11,24 @@ interface MongoError extends Error {
 }
 
 class adminController {
+    logs(req: Request, res: Response) {
+        const logDirectory = path.join(__dirname, '../../../log');
+        fs.readdir(logDirectory, (err, files) => {
+            if (err) {
+                return res.status(500).send('Erro ao ler o diretório de logs');
+            }
+
+            // Ler o conteúdo de cada arquivo de log
+            const logs = files.map((file) => {
+                const filePath = path.join(logDirectory, file);
+                const fileContent = fs.readFileSync(filePath, 'utf8');
+                return { fileName: file, content: fileContent };
+            });
+
+            res.json(logs);
+        });
+    }
+
     dash(req: Request, res: Response) {
         res.json('hello dashbord');
     }
