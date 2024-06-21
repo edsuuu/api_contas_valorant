@@ -14,6 +14,7 @@ adminRoute.use(ipMiddleware);
 
 adminRoute.get('/logs', loginRequired, authorize('admin'), (req: Request, res: Response) => {
     logger.info('GET: /', { ip: (req as any).clientIp });
+    console.log(req);
     adminController.logs(req, res);
 });
 
