@@ -2,11 +2,11 @@
 
 import { Router, Request, Response } from 'express';
 
-import adminController from '@/controllers/admin';
-import loginRequired from '@/middleware/loginRequired';
-import authorize from '@/middleware/authorization';
-import { ipMiddleware } from '@/middleware/capture';
-import logger from '@/middleware/logger';
+import adminController from '../../controllers/admin';
+import loginRequired from '../../middleware/loginRequired';
+import authorize from '../../middleware/authorization';
+import { ipMiddleware } from '../../middleware/capture';
+import logger from '../../middleware/logger';
 
 const adminRoute: Router = Router();
 

@@ -13,18 +13,9 @@
         "strict": true, //ATIVAR O MODO ESTRICTO
         "esModuleInterop": true, //PERMITIR IMPORTAR MODULOS
         "skipLibCheck": true, //IGNORAR ERROS DE MODULOS
-        "typeRoots": [
-            "./node_modules/@types",
-        ],
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "src/*"
-            ]
-        }
+        "typeRoots": ["./node_modules/@types"]
     },
     "include": [
         "src" //ARQUIVO DE ENTRADA
-        ,
     ],
 }

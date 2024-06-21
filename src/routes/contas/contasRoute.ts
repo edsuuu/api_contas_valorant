@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
-import contasController from '@/controllers/contas';
-import loginRequired from '@/middleware/loginRequired';
-import { ipMiddleware } from '@/middleware/capture';
-import logger from '@/middleware/logger';
+import contasController from '../../controllers/contas';
+import loginRequired from '../../middleware/loginRequired';
+import { ipMiddleware } from '../../middleware/capture';
+import logger from '../../middleware/logger';
 
 const contaRoute: Router = Router();
 

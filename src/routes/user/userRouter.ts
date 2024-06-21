@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
-import userController from '@/controllers/user';
-import { ipMiddleware } from '@/middleware/capture';
-import logger from '@/middleware/logger';
-import loginRequired from '@/middleware/loginRequired';
+import userController from '../../controllers/user';
+import { ipMiddleware } from '../../middleware/capture';
+import logger from '../../middleware/logger';
+import loginRequired from '../../middleware/loginRequired';
 
 const userRoute: Router = Router();
 
