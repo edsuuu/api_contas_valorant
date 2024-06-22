@@ -16,51 +16,54 @@ interface IUser extends Document {
     updatedAt?: Date;
 }
 
-const UserSchema = new Schema<IUser>({
-    nome: {
-        type: String,
-        default: '',
-        required: [true, 'Campo nome é obrigatório'],
-        validate: {
-            validator: function (v: string) {
-                return v.length >= 3 && v.length <= 255;
+const UserSchema = new Schema<IUser>(
+    {
+        nome: {
+            type: String,
+            default: '',
+            required: [true, 'Campo nome é obrigatório'],
+            validate: {
+                validator: function (v: string) {
+                    return v.length >= 3 && v.length <= 255;
+                },
+                message: 'Campo nome precisa ter entre 3 a 255 caracteres',
             },
-            message: 'Campo nome precisa ter entre 3 a 255 caracteres'
+            trim: true,
         },
-        trim: true,
-    },
-    email: {
-        type: String,
-        default: '',
-        required: [true, 'Campo e-mail é obrigatório'],
-        unique: true,
-        validate: {
-            validator: (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
-            message: 'Email inválido',
-        },
-    },
-    login: {
-        type: String,
-        default: '',
-        required: [true, 'Campo Login é obrigatório'],
-        unique: true,
-        validate: {
-            validator: function (v: string) {
-                return v.length >= 3 && v.length <= 255;
+        email: {
+            type: String,
+            default: '',
+            required: [true, 'Campo e-mail é obrigatório'],
+            unique: true,
+            validate: {
+                validator: (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+                message: 'Email inválido',
             },
-            message: 'Campo Login precisa ter entre 3 a 255 caracteres'
+        },
+        login: {
+            type: String,
+            default: '',
+            required: [true, 'Campo Login é obrigatório'],
+            unique: true,
+            validate: {
+                validator: function (v: string) {
+                    return v.length >= 3 && v.length <= 255;
+                },
+                message: 'Campo Login precisa ter entre 3 a 255 caracteres',
+            },
+        },
+        password_hash: {
+            type: String,
+            default: '',
+        },
+        permission: {
+            type: String,
+            enum: ['admin', 'user'],
+            default: 'user',
         },
     },
-    password_hash: {
-        type: String,
-        default: '',
-    },
-    permission: {
-        type: String,
-        enum: ['admin', 'user'],
-        default: 'user',
-    },
-}, { timestamps: true });
+    { timestamps: true },
+);
 
 UserSchema.virtual('password')
     .set(function (this: IUser, password: string) {

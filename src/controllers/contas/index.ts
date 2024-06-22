@@ -6,9 +6,7 @@ interface MongoError extends Error {
     code?: number;
 }
 
-
 class ContaController {
-
     async store(req: Request, res: Response): Promise<Response> {
         try {
             const novaConta = new ContaModel(req.body as IConta);
@@ -25,7 +23,7 @@ class ContaController {
         } catch (error) {
             const mongoError = error as MongoError;
             if (mongoError instanceof mongoose.Error.ValidationError) {
-                const validationErrors = Object.values(mongoError.errors).map(err => (err as mongoose.Error.ValidatorError).message);
+                const validationErrors = Object.values(mongoError.errors).map((err) => (err as mongoose.Error.ValidatorError).message);
                 return res.status(400).json({ errors: validationErrors });
             } else if (mongoError.code === 11000) {
                 return res.status(400).json({ error: 'Login já existe' });
@@ -69,7 +67,7 @@ class ContaController {
 
             return res.status(200).json({
                 msg: 'Conta atualizada com sucesso',
-                conta_atualizada: { dono_conta, login_conta, senha_conta }
+                conta_atualizada: { dono_conta, login_conta, senha_conta },
             });
         } catch (error) {
             const mongoError = error as MongoError;

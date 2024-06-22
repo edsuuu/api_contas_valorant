@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../../models/UserModel';
 
 class authController {
-
     async store(req: Request, res: Response): Promise<Response> {
         const { login = '', password = '' } = req.body;
 
