@@ -29,18 +29,16 @@ adminRoute.get('/dashboard', loginRequired, authorize('admin'), (req: Request, r
     adminController.dash(req, res);
 });
 
-//listar um usuario
-
-adminRoute.get('/user/:id', loginRequired, authorize('admin'), (req: Request, res: Response) => {
-    logger.info('GET: /', { ip: (req as any).clientIp });
-    adminController.show(req, res);
-});
-
 //criar um usuario
-
 adminRoute.post('/user/register/', loginRequired, authorize('admin'), (req: Request, res: Response) => {
     logger.info('POST: /', { ip: (req as any).clientIp });
     adminController.criarUser(req, res);
+});
+
+//listar um usuario
+adminRoute.get('/user/:id', loginRequired, authorize('admin'), (req: Request, res: Response) => {
+    logger.info('GET: /', { ip: (req as any).clientIp });
+    adminController.show(req, res);
 });
 
 //atualiza user
